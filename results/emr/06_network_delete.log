@@ -1,0 +1,20 @@
+nat-0461dd7e5c26d6780
+waiting for NAT gateway deletion
+elastic IP released
+internet gateway deleted
+subnet pub deleted
+subnet priv1 deleted
+subnet priv2 deleted
+route table rt_pub deleted
+route table rt_priv deleted
+{
+    "Return": true,
+    "GroupId": "sg-07372e3cdcc2617b2"
+}
+security group deleted
+vpc deleted
+[]
+[
+    "deleted"
+]
+[]

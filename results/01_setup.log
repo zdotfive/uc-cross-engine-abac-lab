@@ -1,0 +1,70 @@
+# 01_setup.sql as admin, 18 statements
+
+> CREATE SCHEMA IF NOT EXISTS labs.xabac_lab COMMENT 'Cross-engine row filters, column masks and ABAC'
+  state=SUCCEEDED (6.985s)
+
+> CREATE OR REPLACE FUNCTION labs.xabac_lab.mask_pii(v STRING) RETURNS STRING RETURN CASE WHEN is_member('admins') THEN v 
+  state=SUCCEEDED (1.247s)
+
+> CREATE OR REPLACE FUNCTION labs.xabac_lab.only_it(c STRING) RETURNS BOOLEAN RETURN is_member('admins') OR c = 'IT'
+  state=SUCCEEDED (1.013s)
+
+> CREATE OR REPLACE FUNCTION labs.xabac_lab.mask_star(v STRING) RETURNS STRING RETURN '****'
+  state=SUCCEEDED (0.888s)
+
+> CREATE OR REPLACE FUNCTION labs.xabac_lab.is_it(c STRING) RETURNS BOOLEAN RETURN c = 'IT'
+  state=SUCCEEDED (0.810s)
+
+> CREATE TABLE labs.xabac_lab.customers_small_delta USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported
+  state=SUCCEEDED (7.072s)
+
+> CREATE TABLE labs.xabac_lab.customers_small_ice USING ICEBERG AS SELECT * FROM labs.xabac_lab.customers_small_delta
+  state=SUCCEEDED (6.556s)
+
+> CREATE TABLE labs.xabac_lab.customers_small_uniform USING DELTA TBLPROPERTIES ( 'delta.feature.catalogManaged' = 'suppor
+  state=SUCCEEDED (3.584s)
+
+> CREATE TABLE labs.xabac_lab.customers_small_delta_abac USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged' = 'supp
+  state=SUCCEEDED (2.547s)
+
+> CREATE TABLE labs.xabac_lab.customers_small_ice_abac USING ICEBERG AS SELECT * FROM labs.xabac_lab.customers_small_delta
+  state=SUCCEEDED (2.880s)
+
+> CREATE TABLE labs.xabac_lab.customers_small_uniform_abac USING DELTA TBLPROPERTIES ( 'delta.feature.catalogManaged' = 's
+  state=SUCCEEDED (3.096s)
+
+> CREATE TABLE labs.xabac_lab.customers_big_delta USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported')
+  state=SUCCEEDED (3.416s)
+
+> CREATE TABLE labs.xabac_lab.customers_big_ice USING ICEBERG AS SELECT * FROM labs.xabac_lab.customers_big_delta
+  state=SUCCEEDED (6.935s)
+
+> CREATE TABLE labs.xabac_lab.customers_big_uniform USING DELTA TBLPROPERTIES ( 'delta.feature.catalogManaged' = 'supporte
+  state=SUCCEEDED (7.056s)
+
+> CREATE TABLE labs.xabac_lab.customers_big_delta_abac USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged' = 'suppor
+  state=SUCCEEDED (6.283s)
+
+> CREATE TABLE labs.xabac_lab.customers_big_ice_abac USING ICEBERG AS SELECT * FROM labs.xabac_lab.customers_big_delta
+  state=SUCCEEDED (6.888s)
+
+> CREATE TABLE labs.xabac_lab.customers_big_uniform_abac USING DELTA TBLPROPERTIES ( 'delta.feature.catalogManaged' = 'sup
+  state=SUCCEEDED (6.979s)
+
+> SELECT table_name, table_type, data_source_format FROM labs.information_schema.tables WHERE table_schema = 'xabac_lab' O
+  state=SUCCEEDED (2.045s)
+  table_name | table_type | data_source_format
+  customers_big_delta | MANAGED | DELTA
+  customers_big_delta_abac | MANAGED | DELTA
+  customers_big_ice | MANAGED | ICEBERG
+  customers_big_ice_abac | MANAGED | ICEBERG
+  customers_big_uniform | MANAGED | DELTA
+  customers_big_uniform_abac | MANAGED | DELTA
+  customers_small_delta | MANAGED | DELTA
+  customers_small_delta_abac | MANAGED | DELTA
+  customers_small_ice | MANAGED | ICEBERG
+  customers_small_ice_abac | MANAGED | ICEBERG
+  customers_small_uniform | MANAGED | DELTA
+  customers_small_uniform_abac | MANAGED | DELTA
+
+# done, 0 failed

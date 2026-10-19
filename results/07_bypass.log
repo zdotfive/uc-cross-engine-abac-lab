@@ -1,0 +1,54 @@
+=== 1. temporary-table-credentials
+customers_small_delta        READ       HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Query on table labs.xabac_lab.customers_small_delta with row filter or column mask not supported on assigned clusters.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "ROW_COLUMN_ACCESS_POLICIES_NOT_SUPPORTED_ON_ASSIGNED_CLUSTERS", "domain": "uni
+customers_small_delta        READ_WRITE HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Table with id 1f8b599f-256c-4e21-a5fe-a5a26fb52494 cannot be written from outside of Databricks Compute Environment due to its kind being TABLE_DELTA. Only 'TABLE_EXTERNAL' and 'TABLE_DELTA_EXTERNAL' table kinds can be written externally.", "details": [{"@type": "type.googlea
+customers_small_delta_abac   READ       HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "ABAC policies can only be called with permission enforcing scope", "details": [{"@type": "type.googleapis.com/google.rpc.RequestInfo", "request_id": "523fda3b-fa95-435c-864c-4f3071faa1aa", "serving_data": ""}]}
+customers_small_delta_abac   READ_WRITE HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Table with id 09cb6095-df7d-4a19-8166-f83b95853e91 cannot be written from outside of Databricks Compute Environment due to its kind being TABLE_DELTA. Only 'TABLE_EXTERNAL' and 'TABLE_DELTA_EXTERNAL' table kinds can be written externally.", "details": [{"@type": "type.googlea
+customers_small_ice          READ       HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Query on table labs.xabac_lab.customers_small_ice with row filter or column mask not supported on assigned clusters.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "ROW_COLUMN_ACCESS_POLICIES_NOT_SUPPORTED_ON_ASSIGNED_CLUSTERS", "domain": "unity
+customers_small_ice          READ_WRITE HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have MODIFY on Table 'labs.xabac_lab.customers_small_ice'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Table", "databricks.com/message_templa
+customers_small_ice_abac     READ       HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "ABAC policies can only be called with permission enforcing scope", "details": [{"@type": "type.googleapis.com/google.rpc.RequestInfo", "request_id": "26c4d451-e30b-4b50-8a5c-40f773765d8c", "serving_data": ""}]}
+customers_small_ice_abac     READ_WRITE HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have MODIFY on Table 'labs.xabac_lab.customers_small_ice_abac'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Table", "databricks.com/message_t
+customers_small_uniform      READ       HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Query on table labs.xabac_lab.customers_small_uniform with row filter or column mask not supported on assigned clusters.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "ROW_COLUMN_ACCESS_POLICIES_NOT_SUPPORTED_ON_ASSIGNED_CLUSTERS", "domain": "u
+customers_small_uniform      READ_WRITE HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Table with id ad990ede-7b8c-4eaa-b273-a89f8fdcc5e3 cannot be written from outside of Databricks Compute Environment due to its kind being TABLE_DELTA. Only 'TABLE_EXTERNAL' and 'TABLE_DELTA_EXTERNAL' table kinds can be written externally.", "details": [{"@type": "type.googlea
+customers_small_uniform_abac READ       HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "ABAC policies can only be called with permission enforcing scope", "details": [{"@type": "type.googleapis.com/google.rpc.RequestInfo", "request_id": "cad658b2-8433-476e-89f7-8de71a6f3a90", "serving_data": ""}]}
+customers_small_uniform_abac READ_WRITE HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Table with id 8969724c-67fc-46fa-8aad-4f8f78eb3202 cannot be written from outside of Databricks Compute Environment due to its kind being TABLE_DELTA. Only 'TABLE_EXTERNAL' and 'TABLE_DELTA_EXTERNAL' table kinds can be written externally.", "details": [{"@type": "type.googlea
+
+=== 2. temporary-path-credentials on the storage location
+customers_small_delta        HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have EXTERNAL USE LOCATION on External Location 'db_s3_external_databricks-s3-ingest-a6ad7'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Exte
+customers_small_delta_abac   HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have EXTERNAL USE LOCATION on External Location 'db_s3_external_databricks-s3-ingest-a6ad7'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Exte
+customers_small_ice          HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have EXTERNAL USE LOCATION on External Location 'db_s3_external_databricks-s3-ingest-a6ad7'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Exte
+customers_small_ice_abac     HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have EXTERNAL USE LOCATION on External Location 'db_s3_external_databricks-s3-ingest-a6ad7'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Exte
+customers_small_uniform      HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have EXTERNAL USE LOCATION on External Location 'db_s3_external_databricks-s3-ingest-a6ad7'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Exte
+customers_small_uniform_abac HTTP 403 {"error_code": "PERMISSION_DENIED", "message": "User does not have EXTERNAL USE LOCATION on External Location 'db_s3_external_databricks-s3-ingest-a6ad7'.", "details": [{"@type": "type.googleapis.com/google.rpc.ErrorInfo", "reason": "PERMISSION_DENIED", "domain": "unity-catalog.databricks.com", "metadata": {"resourceType": "Exte
+
+=== 3. direct S3 reads of files named in the Iceberg metadata
+customers_small_ice          unsigned GET 00000-7a4b9a85-7da9-4b1e-a1a2-f78d391937be.gz.meta HTTP 403 AccessDenied
+customers_small_ice          signed HEAD (mylabs) exit=0 { "ContentLength": 1010 }
+customers_small_ice          unsigned GET snap-5844604097382858160-1-f36b24cc-2770-4ebc-84ef HTTP 403 AccessDenied
+customers_small_ice          signed HEAD (mylabs) exit=0 { "ContentLength": 4526 }
+customers_small_ice_abac     unsigned GET 00000-1a1f3bd5-6006-4562-a283-518efadae25d.gz.meta HTTP 403 AccessDenied
+customers_small_ice_abac     signed HEAD (mylabs) exit=0 { "ContentLength": 1008 }
+customers_small_ice_abac     unsigned GET snap-2946991989764384166-1-c093689a-92b4-4f2c-94af HTTP 403 AccessDenied
+customers_small_ice_abac     signed HEAD (mylabs) exit=0 { "ContentLength": 4526 }
+customers_small_uniform      unsigned GET 00000-866eae8c-f5a7-46e3-a196-b59cb2037e5a.metadat HTTP 403 AccessDenied
+customers_small_uniform      signed HEAD (mylabs) exit=0 { "ContentLength": 2449 }
+customers_small_uniform      unsigned GET snap-4085997142568686173-1-70cd7fef-fbfd-432b-87e5 HTTP 403 AccessDenied
+customers_small_uniform      signed HEAD (mylabs) exit=0 { "ContentLength": 4517 }
+customers_small_uniform_abac unsigned GET 00000-db4ac0f9-320c-41bc-bd0a-146293639b56.metadat HTTP 403 AccessDenied
+customers_small_uniform_abac signed HEAD (mylabs) exit=0 { "ContentLength": 2449 }
+customers_small_uniform_abac unsigned GET snap-5935925812495830771-1-2e33f4d1-cf8a-41b8-8480 HTTP 403 AccessDenied
+customers_small_uniform_abac signed HEAD (mylabs) exit=0 { "ContentLength": 4520 }
+
+=== 4. loadTable with vended-credentials delegation
+customers_small_delta        HTTP 400 {"error": {"message": "Table 'labs.xabac_lab.customers_small_delta' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: b88540cc-0144-4aec-b091-a8cdbd2277b2)", "type": "BadRequestException", "code": 400}}
+customers_small_delta_abac   HTTP 400 {"error": {"message": "Table 'labs.xabac_lab.customers_small_delta_abac' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 221620bb-652c-4abd-9559-df8372dd58d8)", "type": "BadRequestException", "code": 400}}
+customers_small_ice          HTTP 200 config={'scan-planning-mode': 'server'} storage-credentials=[]
+customers_small_ice_abac     HTTP 200 config={'scan-planning-mode': 'server'} storage-credentials=[]
+customers_small_uniform      HTTP 200 config={'scan-planning-mode': 'server'} storage-credentials=[]
+customers_small_uniform_abac HTTP 200 config={'scan-planning-mode': 'server'} storage-credentials=[]
+
+=== 5. server-side scan plan (what the client receives)
+customers_small_ice          HTTP 400 {"error": {"message": "Case sensitivity is not currently supported. [ErrorCode: 4000] (request_id: bafe704c-b45a-4973-8136-2991840e035c)", "type": "BadRequestException", "code": 400}}
+customers_small_ice_abac     HTTP 400 {"error": {"message": "Case sensitivity is not currently supported. [ErrorCode: 4000] (request_id: 68fd2476-2e13-409e-b85c-ef0544183227)", "type": "BadRequestException", "code": 400}}
+customers_small_uniform      HTTP 400 {"error": {"message": "Case sensitivity is not currently supported. [ErrorCode: 4000] (request_id: 714c4408-f90a-4b3d-94c3-ffc26e111efb)", "type": "BadRequestException", "code": 400}}
+customers_small_uniform_abac HTTP 400 {"error": {"message": "Case sensitivity is not currently supported. [ErrorCode: 4000] (request_id: e31f5b7a-86c5-4a86-96a5-9ecbd691ef97)", "type": "BadRequestException", "code": 400}}
+customers_small_delta        HTTP 400 {"error": {"message": "Case sensitivity is not currently supported. [ErrorCode: 4000] (request_id: c7df78d3-d4d1-4e91-a051-f902cdffa33b)", "type": "BadRequestException", "code": 400}}

@@ -1,0 +1,26 @@
+10:15:36 PENDING
+10:16:07 PENDING
+10:16:37 PENDING
+10:17:08 SCHEDULED
+10:17:38 SCHEDULED
+10:18:09 FAILED
+{
+    "state": "FAILED",
+    "stateDetails": "Job failed, please check complete logs in configured logging destination. ExitCode: 1. Last few exceptions: Exception in thread \"main\" java.nio.file.NoSuchFileException: /usr/share/aws/iceberg/lib/iceberg-spark3-runtime.jar\nException in thread \"main\" java.nio.file.NoSuchFileException: /usr/share/aws/iceberg/lib/iceberg-spark3-runtime.jar...",
+    "releaseLabel": "emr-spark-8.1.0",
+    "createdAt": "2026-10-19T12:15:22.559000+02:00",
+    "updatedAt": "2026-10-19T12:18:03.064000+02:00",
+    "totalExecutionDurationSeconds": 11,
+    "totalResourceUtilization": {
+        "vCPUHour": 0.007,
+        "memoryGBHour": 0.017,
+        "storageGBHour": 0.067
+    },
+    "billedResourceUtilization": {
+        "vCPUHour": 0.033,
+        "memoryGBHour": 0.083,
+        "storageGBHour": 0.0
+    }
+}
+
+[exited with code 0]

@@ -1,0 +1,8 @@
+service principal: id=76891315690770 applicationId=5fe8193a-4675-429d-834f-e6dc0756269c
+  File "<string>", line 9
+    f.write(f"DATABRICKS_CLIENT_ID={app}\nDATABRICKS_CLIENT_SECRET={d[\"secret\"]}\nREADER_SP_ID={sp_id}\n")
+                                                                       ^
+SyntaxError: unexpected character after line continuation character
+reusing existing service principal
+service principal: id=76891315690770 applicationId=5fe8193a-4675-429d-834f-e6dc0756269c
+credentials written to .env, secret expires 2026-10-26T09:08:00Z

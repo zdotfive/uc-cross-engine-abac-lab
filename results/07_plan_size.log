@@ -1,0 +1,4 @@
+customers_small_ice            plan 0.988s status=completed tasks=1 plan-tasks=0 records=250 bytes=5576 credential-prefixes=1
+customers_big_ice              plan 6.225s status=completed tasks=1 plan-tasks=0 records=2500000 bytes=22833503 credential-prefixes=1
+customers_big_uniform          plan 0.840s status=completed tasks=1 plan-tasks=0 records=2500000 bytes=22833503 credential-prefixes=1
+customers_big_ice_abac         plan 5.946s status=completed tasks=1 plan-tasks=0 records=2500000 bytes=22833503 credential-prefixes=1

@@ -1,0 +1,72 @@
+# 02_rules_classic.sql as admin, 23 statements
+
+> ALTER TABLE labs.xabac_lab.customers_small_delta SET ROW FILTER labs.xabac_lab.only_it ON (country)
+  state=SUCCEEDED (1.130s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_delta ALTER COLUMN email SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (1.002s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_delta ALTER COLUMN iban SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.876s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_ice SET ROW FILTER labs.xabac_lab.only_it ON (country)
+  state=SUCCEEDED (0.810s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_ice ALTER COLUMN email SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.913s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_ice ALTER COLUMN iban SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.839s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_uniform SET ROW FILTER labs.xabac_lab.only_it ON (country)
+  state=SUCCEEDED (0.765s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_uniform ALTER COLUMN email SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.801s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_uniform ALTER COLUMN iban SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.819s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_delta SET ROW FILTER labs.xabac_lab.only_it ON (country)
+  state=SUCCEEDED (0.801s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_delta ALTER COLUMN email SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.855s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_delta ALTER COLUMN iban SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.896s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_ice SET ROW FILTER labs.xabac_lab.only_it ON (country)
+  state=SUCCEEDED (0.785s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_ice ALTER COLUMN email SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.937s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_ice ALTER COLUMN iban SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.835s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_uniform SET ROW FILTER labs.xabac_lab.only_it ON (country)
+  state=SUCCEEDED (0.753s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_uniform ALTER COLUMN email SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.814s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_uniform ALTER COLUMN iban SET MASK labs.xabac_lab.mask_pii
+  state=SUCCEEDED (0.816s)
+
+> GRANT USE CATALOG ON CATALOG labs TO `5fe8193a-4675-429d-834f-e6dc0756269c`
+  state=SUCCEEDED (0.783s)
+
+> GRANT USE SCHEMA ON SCHEMA labs.xabac_lab TO `5fe8193a-4675-429d-834f-e6dc0756269c`
+  state=SUCCEEDED (0.652s)
+
+> GRANT SELECT ON SCHEMA labs.xabac_lab TO `5fe8193a-4675-429d-834f-e6dc0756269c`
+  state=SUCCEEDED (0.495s)
+
+> GRANT EXECUTE ON SCHEMA labs.xabac_lab TO `5fe8193a-4675-429d-834f-e6dc0756269c`
+  state=SUCCEEDED (0.633s)
+
+> GRANT EXTERNAL USE SCHEMA ON SCHEMA labs.xabac_lab TO `5fe8193a-4675-429d-834f-e6dc0756269c`
+  state=SUCCEEDED (0.534s)
+
+# done, 0 failed

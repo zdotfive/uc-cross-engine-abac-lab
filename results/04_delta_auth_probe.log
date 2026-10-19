@@ -1,0 +1,12 @@
+auth=oauth uri=host
+> SELECT country, count(*) AS n FROM labs.xabac_lab.customers_small_delta GROUP BY country ORDER BY country
+  error (2.791s): Py4JJavaError: An error occurred while calling o57.collectToPython.
+: java.io.IOException: Failed to plan table scan for xabac_lab.customers_small_delta. HTTP status: 401, Response: {"error_code":401,"message":"Credential was not sent or was of an unsupported type for this API. [ReqId: 987a2027-e171-4589-a837-38eef23e61b6]"}
+	at org.apache.spark.sql.delta.serverSidePlanning.IcebergRESTCatalogPlanningClient.planScan(IcebergRESTCatalogPlanningClient.scala:404)
+auth=oauth uri=host+wsid
+> SELECT country, count(*) AS n FROM labs.xabac_lab.customers_small_delta GROUP BY country ORDER BY country
+  error (3.079s): Py4JJavaError: An error occurred while calling o57.collectToPython.
+: java.io.IOException: Failed to plan table scan for xabac_lab.customers_small_delta. HTTP status: 404, Response: 
+	at org.apache.spark.sql.delta.serverSidePlanning.IcebergRESTCatalogPlanningClient.planScan(IcebergRESTCatalogPlanningClient.scala:404)
+> SELECT country, count(*) AS n FROM labs.xabac_lab.customers_small_delta GROUP BY country ORDER BY country
+  ok (0.000s) [{'country': 'IT', 'n': 250}]

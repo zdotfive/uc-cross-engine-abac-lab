@@ -1,0 +1,55 @@
+# 99_cleanup.sql as admin, 7 statements
+
+> DROP POLICY IF EXISTS xabac_mask_pii ON SCHEMA labs.xabac_lab
+  state=FAILED (0.660s)
+  error: ServiceErrorCode.BAD_REQUEST: 
+[PARSE_SYNTAX_ERROR] Syntax error at or near 'EXISTS': missing 'ON'. SQLSTATE: 42601 (line 1, pos 15)
+
+== SQL ==
+DROP POLICY IF EXISTS xabac_mask_pii ON SCHEMA labs.xabac_lab
+---------------^^^
+
+
+> DROP POLICY IF EXISTS xabac_only_it ON SCHEMA labs.xabac_lab
+  state=FAILED (0.355s)
+  error: ServiceErrorCode.BAD_REQUEST: 
+[PARSE_SYNTAX_ERROR] Syntax error at or near 'EXISTS': missing 'ON'. SQLSTATE: 42601 (line 1, pos 15)
+
+== SQL ==
+DROP POLICY IF EXISTS xabac_only_it  ON SCHEMA labs.xabac_lab
+---------------^^^
+
+
+> DROP SCHEMA IF EXISTS labs.xabac_lab CASCADE
+  state=SUCCEEDED (0.819s)
+
+> REVOKE USE CATALOG ON CATALOG labs FROM `5fe8193a-4675-429d-834f-e6dc0756269c`
+  state=SUCCEEDED (0.787s)
+
+> DROP GOVERNED TAG xabac_pii
+  state=SUCCEEDED (1.121s)
+
+> DROP GOVERNED TAG xabac_country
+  state=SUCCEEDED (0.630s)
+
+> DROP GOVERNED TAG xabac_abac
+  state=SUCCEEDED (0.920s)
+
+# done, 2 failed
+service principal deleted
+xabac_lab present: False
+reader grants on labs: []
+sp-xabac-reader present: False
+# tags.sql as admin, 1 statements
+  state=SUCCEEDED (1.119s)
+# pol.sql as admin, 2 statements
+> SELECT count(*) AS xabac_policies FROM labs.information_schema.abac_policy_definitions WHERE policy_name LIKE 'xabac%'
+  state=SUCCEEDED (1.892s)
+  xabac_policies
+  0
+  state=SUCCEEDED (0.843s)
+  class.br_rg | 3adb76d4-f27b-3b31-89cf-5c45eb3ec941 | A Brazilian RG (Registro Geral) - individual state identification number. | [] | NULL | NULL
+  class.br_titulo_eleitor | aa920d69-6d36-3ef4-a852-c470f9456ce5 | A Brazilian Título de Eleitor (voter registration) number — 12 digits with two check digits; digits 9–10 encode the issuing state. | [] | NULL | NULL
+  class.in_esic | d904fa69-9163-331f-b101-70a28a11ba1e | An India Employee State Insurance (ESI/ESIC) number — a 10-digit Insured Person (IP) number. Detected by column name only. | [] | NULL | NULL
+  class.medical_license | 58c26777-e72c-371c-b5c7-d1fceb17bf49 | A medical provider credential identifier, such as a US National Provider Identifier (NPI, a 10-digit CMS/NPPES number) or a state-issued medical license number. | [] | NULL | NULL
+  class.employment_status | 0f622128-ec87-3a72-995f-247b53986f57 | Employment status information indicating whether an individual is employed, unemployed, or in another employment state. | [] | NULL | NULL

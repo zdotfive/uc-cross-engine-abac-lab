@@ -1,0 +1,32 @@
+16:48:39 PENDING
+16:49:10 PENDING
+16:49:41 PENDING
+16:50:12 SCHEDULED
+16:50:43 SCHEDULED
+16:51:13 RUNNING
+16:51:44 RUNNING
+16:52:15 RUNNING
+16:52:45 RUNNING
+16:53:16 RUNNING
+16:53:47 RUNNING
+16:54:18 SUCCESS
+{
+    "state": "SUCCESS",
+    "stateDetails": "",
+    "releaseLabel": "emr-spark-8.1.0",
+    "createdAt": "2026-10-19T18:48:32.525000+02:00",
+    "updatedAt": "2026-10-19T18:53:52.803000+02:00",
+    "totalExecutionDurationSeconds": 173,
+    "totalResourceUtilization": {
+        "vCPUHour": 0.273,
+        "memoryGBHour": 0.683,
+        "storageGBHour": 2.733
+    },
+    "billedResourceUtilization": {
+        "vCPUHour": 0.273,
+        "memoryGBHour": 0.683,
+        "storageGBHour": 0.0
+    }
+}
+
+[exited with code 0]

@@ -1,0 +1,14 @@
+application state: STOPPED
+application deleted
+{
+    "Name": "xabac-lab/reader",
+    "DeletionDate": "2026-10-19T18:54:56.427000+02:00"
+}
+role policy deleted
+role deleted
+bucket deleted
+## verify
+[]
+[]
+An error occurred (NoSuchEntity) when calling the GetRole operation: The role with name xabac-lab-emr-job-role cannot be found.
+An error occurred (404) when calling the HeadBucket operation: Not Found

@@ -1,0 +1,11 @@
+## bucket
+{"Location": "http://xabac-lab-emr-<aws-account-id>-euw1.s3.amazonaws.com/"}
+upload: emr/emr_bench.py to s3://xabac-lab-emr-<aws-account-id>-euw1/code/emr_bench.py
+## secret
+{"ARN": "arn:aws:secretsmanager:eu-west-1:<aws-account-id>:secret:xabac-lab/reader-S2S2rV", "Name": "xabac-lab/reader"}
+## IAM role
+arn:aws:iam::<aws-account-id>:role/xabac-lab-emr-job-role
+## EMR Serverless application
+{"applicationId": "00g9l294bblmd70p", "arn": "arn:aws:emr-serverless:eu-west-1:<aws-account-id>:/applications/00g9l294bblmd70p"}
+## start-job-run
+{"jobRunId": "00g9l29chrnsag0r"}

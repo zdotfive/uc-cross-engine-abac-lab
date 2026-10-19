@@ -1,0 +1,212 @@
+# 04_check.sql as admin, 25 statements
+
+> SELECT current_user() AS who, is_member('admins') AS in_admins
+  state=SUCCEEDED (0.913s)
+  who | in_admins
+  <admin-user> | true
+
+> SELECT 'labs.xabac_lab.customers_small_delta' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_delta GRO
+  state=SUCCEEDED (1.163s)
+  t | country | n
+  labs.xabac_lab.customers_small_delta | DE | 250
+  labs.xabac_lab.customers_small_delta | ES | 250
+  labs.xabac_lab.customers_small_delta | FR | 250
+  labs.xabac_lab.customers_small_delta | IT | 250
+
+> SELECT 'labs.xabac_lab.customers_small_delta' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_smal
+  state=SUCCEEDED (1.080s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_small_delta | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_small_delta | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_small_delta | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_small_delta | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_small_delta | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_small_delta_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_delt
+  state=SUCCEEDED (0.925s)
+  t | country | n
+  labs.xabac_lab.customers_small_delta_abac | DE | 250
+  labs.xabac_lab.customers_small_delta_abac | ES | 250
+  labs.xabac_lab.customers_small_delta_abac | FR | 250
+  labs.xabac_lab.customers_small_delta_abac | IT | 250
+
+> SELECT 'labs.xabac_lab.customers_small_delta_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers
+  state=SUCCEEDED (0.814s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_small_delta_abac | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_small_delta_abac | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_small_delta_abac | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_small_delta_abac | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_small_delta_abac | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_small_ice' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_ice GROUP B
+  state=SUCCEEDED (1.013s)
+  t | country | n
+  labs.xabac_lab.customers_small_ice | DE | 250
+  labs.xabac_lab.customers_small_ice | ES | 250
+  labs.xabac_lab.customers_small_ice | FR | 250
+  labs.xabac_lab.customers_small_ice | IT | 250
+
+> SELECT 'labs.xabac_lab.customers_small_ice' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_small_
+  state=SUCCEEDED (0.932s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_small_ice | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_small_ice | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_small_ice | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_small_ice | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_small_ice | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_small_ice_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_ice_ab
+  state=SUCCEEDED (0.818s)
+  t | country | n
+  labs.xabac_lab.customers_small_ice_abac | DE | 250
+  labs.xabac_lab.customers_small_ice_abac | ES | 250
+  labs.xabac_lab.customers_small_ice_abac | FR | 250
+  labs.xabac_lab.customers_small_ice_abac | IT | 250
+
+> SELECT 'labs.xabac_lab.customers_small_ice_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_s
+  state=SUCCEEDED (0.754s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_small_ice_abac | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_small_ice_abac | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_small_ice_abac | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_small_ice_abac | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_small_ice_abac | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_small_uniform' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_uniform
+  state=SUCCEEDED (0.976s)
+  t | country | n
+  labs.xabac_lab.customers_small_uniform | DE | 250
+  labs.xabac_lab.customers_small_uniform | ES | 250
+  labs.xabac_lab.customers_small_uniform | FR | 250
+  labs.xabac_lab.customers_small_uniform | IT | 250
+
+> SELECT 'labs.xabac_lab.customers_small_uniform' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_sm
+  state=SUCCEEDED (0.872s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_small_uniform | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_small_uniform | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_small_uniform | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_small_uniform | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_small_uniform | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_small_uniform_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_un
+  state=SUCCEEDED (0.784s)
+  t | country | n
+  labs.xabac_lab.customers_small_uniform_abac | DE | 250
+  labs.xabac_lab.customers_small_uniform_abac | ES | 250
+  labs.xabac_lab.customers_small_uniform_abac | FR | 250
+  labs.xabac_lab.customers_small_uniform_abac | IT | 250
+
+> SELECT 'labs.xabac_lab.customers_small_uniform_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.custome
+  state=SUCCEEDED (0.785s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_small_uniform_abac | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_small_uniform_abac | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_small_uniform_abac | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_small_uniform_abac | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_small_uniform_abac | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_big_delta' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_delta GROUP B
+  state=SUCCEEDED (0.961s)
+  t | country | n
+  labs.xabac_lab.customers_big_delta | DE | 2500000
+  labs.xabac_lab.customers_big_delta | ES | 2500000
+  labs.xabac_lab.customers_big_delta | FR | 2500000
+  labs.xabac_lab.customers_big_delta | IT | 2500000
+
+> SELECT 'labs.xabac_lab.customers_big_delta' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_de
+  state=SUCCEEDED (0.995s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_big_delta | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_big_delta | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_big_delta | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_big_delta | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_big_delta | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_big_delta_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_delta_ab
+  state=SUCCEEDED (0.988s)
+  t | country | n
+  labs.xabac_lab.customers_big_delta_abac | DE | 2500000
+  labs.xabac_lab.customers_big_delta_abac | ES | 2500000
+  labs.xabac_lab.customers_big_delta_abac | FR | 2500000
+  labs.xabac_lab.customers_big_delta_abac | IT | 2500000
+
+> SELECT 'labs.xabac_lab.customers_big_delta_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_b
+  state=SUCCEEDED (1.353s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_big_delta_abac | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_big_delta_abac | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_big_delta_abac | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_big_delta_abac | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_big_delta_abac | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_big_ice' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_ice GROUP BY co
+  state=SUCCEEDED (1.156s)
+  t | country | n
+  labs.xabac_lab.customers_big_ice | DE | 2500000
+  labs.xabac_lab.customers_big_ice | ES | 2500000
+  labs.xabac_lab.customers_big_ice | FR | 2500000
+  labs.xabac_lab.customers_big_ice | IT | 2500000
+
+> SELECT 'labs.xabac_lab.customers_big_ice' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_ice 
+  state=SUCCEEDED (2.376s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_big_ice | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_big_ice | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_big_ice | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_big_ice | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_big_ice | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_big_ice_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_ice_abac G
+  state=SUCCEEDED (0.953s)
+  t | country | n
+  labs.xabac_lab.customers_big_ice_abac | DE | 2500000
+  labs.xabac_lab.customers_big_ice_abac | ES | 2500000
+  labs.xabac_lab.customers_big_ice_abac | FR | 2500000
+  labs.xabac_lab.customers_big_ice_abac | IT | 2500000
+
+> SELECT 'labs.xabac_lab.customers_big_ice_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big
+  state=SUCCEEDED (1.318s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_big_ice_abac | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_big_ice_abac | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_big_ice_abac | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_big_ice_abac | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_big_ice_abac | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_big_uniform' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_uniform GRO
+  state=SUCCEEDED (1.198s)
+  t | country | n
+  labs.xabac_lab.customers_big_uniform | DE | 2500000
+  labs.xabac_lab.customers_big_uniform | ES | 2500000
+  labs.xabac_lab.customers_big_uniform | FR | 2500000
+  labs.xabac_lab.customers_big_uniform | IT | 2500000
+
+> SELECT 'labs.xabac_lab.customers_big_uniform' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_
+  state=SUCCEEDED (1.783s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_big_uniform | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_big_uniform | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_big_uniform | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_big_uniform | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_big_uniform | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+> SELECT 'labs.xabac_lab.customers_big_uniform_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_unifor
+  state=SUCCEEDED (1.136s)
+  t | country | n
+  labs.xabac_lab.customers_big_uniform_abac | DE | 2500000
+  labs.xabac_lab.customers_big_uniform_abac | ES | 2500000
+  labs.xabac_lab.customers_big_uniform_abac | FR | 2500000
+  labs.xabac_lab.customers_big_uniform_abac | IT | 2500000
+
+> SELECT 'labs.xabac_lab.customers_big_uniform_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers
+  state=SUCCEEDED (1.387s)
+  t | customer_id | email | iban | country
+  labs.xabac_lab.customers_big_uniform_abac | 1 | customer1@example.com | IT00X00000000000000000000 | IT
+  labs.xabac_lab.customers_big_uniform_abac | 2 | customer2@example.com | DE00X00000000000000007919 | DE
+  labs.xabac_lab.customers_big_uniform_abac | 3 | customer3@example.com | FR00X00000000000000015838 | FR
+  labs.xabac_lab.customers_big_uniform_abac | 4 | customer4@example.com | ES00X00000000000000023757 | ES
+  labs.xabac_lab.customers_big_uniform_abac | 5 | customer5@example.com | IT00X00000000000000031676 | IT
+
+# done, 0 failed

@@ -1,0 +1,55 @@
+# 03b_policies.sql as admin, 5 statements
+
+> CREATE POLICY xabac_mask_pii ON SCHEMA labs.xabac_lab COMMENT 'Mask every column tagged xabac_pii' COLUMN MASK labs.xaba
+  state=SUCCEEDED (1.092s)
+
+> CREATE POLICY xabac_only_it ON SCHEMA labs.xabac_lab COMMENT 'Keep only IT rows' ROW FILTER labs.xabac_lab.is_it TO `5fe
+  state=SUCCEEDED (0.580s)
+
+> SHOW POLICIES ON SCHEMA labs.xabac_lab
+  state=SUCCEEDED (0.826s)
+  Policy Name | Policy Type | Catalog | Schema | Table | Comment | on_securable_type | on_securable_fullname
+  xabac_mask_pii | COLUMN_MASK | labs | xabac_lab | NULL | Mask every column tagged xabac_pii | SCHEMA | labs.xabac_lab
+  xabac_only_it | ROW_FILTER | labs | xabac_lab | NULL | Keep only IT rows | SCHEMA | labs.xabac_lab
+
+> DESCRIBE POLICY xabac_mask_pii ON SCHEMA labs.xabac_lab
+  state=SUCCEEDED (0.876s)
+  info_name | info_value
+  Name | xabac_mask_pii
+  On Securable Type | SCHEMA
+  On Securable | labs.xabac_lab
+  Comment | Mask every column tagged xabac_pii
+  To Principals | 5fe8193a-4675-429d-834f-e6dc0756269c
+  For Securable Type | TABLE
+  When Condition | has_tag('xabac_abac')
+  Match Columns | has_tag('xabac_pii') AS pii
+  Policy Type | COLUMN_MASK
+    On Column | pii
+    Function Name | labs.xabac_lab.mask_star
+  Created By | <admin-user>
+  Created At | 2026-10-19 AD at 09:10:27 UTC
+  Updated By | <admin-user>
+  Updated At | 2026-10-19 AD at 09:10:27 UTC
+  Governed Tags | xabac_abac, xabac_pii
+
+> DESCRIBE POLICY xabac_only_it ON SCHEMA labs.xabac_lab
+  state=SUCCEEDED (0.648s)
+  info_name | info_value
+  Name | xabac_only_it
+  On Securable Type | SCHEMA
+  On Securable | labs.xabac_lab
+  Comment | Keep only IT rows
+  To Principals | 5fe8193a-4675-429d-834f-e6dc0756269c
+  For Securable Type | TABLE
+  When Condition | has_tag('xabac_abac')
+  Match Columns | has_tag('xabac_country') AS ctry
+  Policy Type | ROW_FILTER
+    Function Name | labs.xabac_lab.is_it
+    Using Columns | ctry
+  Created By | <admin-user>
+  Created At | 2026-10-19 AD at 09:10:28 UTC
+  Updated By | <admin-user>
+  Updated At | 2026-10-19 AD at 09:10:28 UTC
+  Governed Tags | xabac_abac, xabac_country
+
+# done, 0 failed

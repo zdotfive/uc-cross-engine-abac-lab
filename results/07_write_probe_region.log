@@ -1,0 +1,23 @@
+### iceberg, AWS_REGION=eu-west-1, without MODIFY
+[iceberg] > INSERT INTO labs.xabac_lab.customers_small_ice VALUES (99999999, 'External Write', 'external@example.com', 'XX00X0', 'DE', CAST(1 AS DECIMAL(10,2)))
+  error (5.815s): Py4JJavaError: An error occurred while calling o52.sql. : org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 0.0 failed 1 times, most recent failure: Lost task 0.0 in stage 0.0 (TID 0) (<local-host> executor driver): java.io.UncheckedIOException: Failed to close current writer
+[iceberg] > INSERT INTO labs.xabac_lab.customers_small_ice_abac VALUES (99999999, 'External Write', 'external@example.com', 'XX00X0', 'DE', CAST(1 AS DECIMAL(10,2)))
+  error (2.280s): Py4JJavaError: An error occurred while calling o52.sql. : org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 1.0 failed 1 times, most recent failure: Lost task 0.0 in stage 1.0 (TID 1) (<local-host> executor driver): java.io.UncheckedIOException: Failed to close current writer
+### grant MODIFY
+  state=SUCCEEDED (0.883s)
+  state=SUCCEEDED (0.540s)
+  state=SUCCEEDED (0.493s)
+### iceberg, AWS_REGION=eu-west-1, with MODIFY
+[iceberg] > INSERT INTO labs.xabac_lab.customers_small_ice VALUES (99999999, 'External Write', 'external@example.com', 'XX00X0', 'DE', CAST(1 AS DECIMAL(10,2)))
+  error (3.299s): Py4JJavaError: An error occurred while calling o52.sql. : org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 0.0 failed 1 times, most recent failure: Lost task 0.0 in stage 0.0 (TID 0) (<local-host> executor driver): java.io.UncheckedIOException: Failed to close current writer
+[iceberg] > INSERT INTO labs.xabac_lab.customers_small_ice_abac VALUES (99999999, 'External Write', 'external@example.com', 'XX00X0', 'DE', CAST(1 AS DECIMAL(10,2)))
+  error (0.255s): Py4JJavaError: An error occurred while calling o52.sql. : org.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 1.0 failed 1 times, most recent failure: Lost task 0.0 in stage 1.0 (TID 1) (<local-host> executor driver): java.io.UncheckedIOException: Failed to close current writer
+### revoke MODIFY + admin count
+  state=SUCCEEDED (0.863s)
+  state=SUCCEEDED (0.528s)
+  state=SUCCEEDED (0.505s)
+  state=SUCCEEDED (0.800s)
+  t | n | external_rows
+  ice | 1000 | 0
+  ice_abac | 1000 | 0
+  delta | 1000 | 0

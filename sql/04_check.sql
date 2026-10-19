@@ -1,0 +1,26 @@
+-- Run as admin and as reader: who am I, rows per country, first 5 email/iban, per table.
+SELECT current_user() AS who, is_member('admins') AS in_admins;
+SELECT 'labs.xabac_lab.customers_small_delta' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_delta GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_small_delta' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_small_delta ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_small_delta_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_delta_abac GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_small_delta_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_small_delta_abac ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_small_ice' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_ice GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_small_ice' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_small_ice ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_small_ice_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_ice_abac GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_small_ice_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_small_ice_abac ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_small_uniform' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_uniform GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_small_uniform' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_small_uniform ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_small_uniform_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_small_uniform_abac GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_small_uniform_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_small_uniform_abac ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_big_delta' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_delta GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_big_delta' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_delta ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_big_delta_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_delta_abac GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_big_delta_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_delta_abac ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_big_ice' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_ice GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_big_ice' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_ice ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_big_ice_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_ice_abac GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_big_ice_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_ice_abac ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_big_uniform' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_uniform GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_big_uniform' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_uniform ORDER BY customer_id LIMIT 5;
+SELECT 'labs.xabac_lab.customers_big_uniform_abac' AS t, country, count(*) AS n FROM labs.xabac_lab.customers_big_uniform_abac GROUP BY country ORDER BY country;
+SELECT 'labs.xabac_lab.customers_big_uniform_abac' AS t, customer_id, email, iban, country FROM labs.xabac_lab.customers_big_uniform_abac ORDER BY customer_id LIMIT 5;

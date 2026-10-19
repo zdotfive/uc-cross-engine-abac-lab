@@ -1,0 +1,10 @@
+# 08b_list_price.sql as admin, 1 statements
+
+> SELECT sku_name, currency_code, usage_unit, pricing.default AS list_price, price_start_time, price_end_time FROM system.
+  state=SUCCEEDED (4.094s)
+  sku_name | currency_code | usage_unit | list_price | price_start_time | price_end_time
+  PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND | USD | DBU | 0.390000000000000000 | 2025-04-30T23:59:59.000Z | NULL
+  PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND | USD | DBU | 0.390000000000000000 | 2025-01-31T23:59:59.000Z | 2025-04-30T23:59:59.000Z
+  PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND | USD | DBU | 0.390000000000000000 | 2024-10-31T23:59:59.000Z | 2025-01-31T23:59:59.000Z
+
+# done, 0 failed

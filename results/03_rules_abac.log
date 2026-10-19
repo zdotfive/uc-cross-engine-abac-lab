@@ -1,0 +1,95 @@
+# 03_rules_abac.sql as admin, 30 statements
+
+> CREATE GOVERNED TAG xabac_pii DESCRIPTION 'Lab: personal data column' VALUES ('email', 'iban')
+  state=SUCCEEDED (0.991s)
+
+> CREATE GOVERNED TAG xabac_country DESCRIPTION 'Lab: column used for the country row filter'
+  state=SUCCEEDED (0.598s)
+
+> CREATE GOVERNED TAG xabac_abac DESCRIPTION 'Lab: table governed by ABAC policies'
+  state=SUCCEEDED (0.709s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_delta_abac SET TAGS ('xabac_abac')
+  state=SUCCEEDED (0.592s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_delta_abac ALTER COLUMN email SET TAGS ('xabac_pii' = 'email')
+  state=SUCCEEDED (0.676s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_delta_abac ALTER COLUMN iban SET TAGS ('xabac_pii' = 'iban')
+  state=SUCCEEDED (0.554s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_delta_abac ALTER COLUMN country SET TAGS ('xabac_country')
+  state=SUCCEEDED (0.641s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_ice_abac SET TAGS ('xabac_abac')
+  state=SUCCEEDED (0.574s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_ice_abac ALTER COLUMN email SET TAGS ('xabac_pii' = 'email')
+  state=SUCCEEDED (0.599s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_ice_abac ALTER COLUMN iban SET TAGS ('xabac_pii' = 'iban')
+  state=SUCCEEDED (0.538s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_ice_abac ALTER COLUMN country SET TAGS ('xabac_country')
+  state=SUCCEEDED (0.613s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_uniform_abac SET TAGS ('xabac_abac')
+  state=SUCCEEDED (0.563s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_uniform_abac ALTER COLUMN email SET TAGS ('xabac_pii' = 'email')
+  state=SUCCEEDED (0.693s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_uniform_abac ALTER COLUMN iban SET TAGS ('xabac_pii' = 'iban')
+  state=SUCCEEDED (0.558s)
+
+> ALTER TABLE labs.xabac_lab.customers_small_uniform_abac ALTER COLUMN country SET TAGS ('xabac_country')
+  state=SUCCEEDED (0.549s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_delta_abac SET TAGS ('xabac_abac')
+  state=SUCCEEDED (0.538s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_delta_abac ALTER COLUMN email SET TAGS ('xabac_pii' = 'email')
+  state=SUCCEEDED (0.605s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_delta_abac ALTER COLUMN iban SET TAGS ('xabac_pii' = 'iban')
+  state=SUCCEEDED (0.619s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_delta_abac ALTER COLUMN country SET TAGS ('xabac_country')
+  state=SUCCEEDED (0.711s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_ice_abac SET TAGS ('xabac_abac')
+  state=SUCCEEDED (0.556s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_ice_abac ALTER COLUMN email SET TAGS ('xabac_pii' = 'email')
+  state=SUCCEEDED (0.673s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_ice_abac ALTER COLUMN iban SET TAGS ('xabac_pii' = 'iban')
+  state=SUCCEEDED (0.711s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_ice_abac ALTER COLUMN country SET TAGS ('xabac_country')
+  state=SUCCEEDED (0.517s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_uniform_abac SET TAGS ('xabac_abac')
+  state=SUCCEEDED (0.554s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_uniform_abac ALTER COLUMN email SET TAGS ('xabac_pii' = 'email')
+  state=SUCCEEDED (0.591s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_uniform_abac ALTER COLUMN iban SET TAGS ('xabac_pii' = 'iban')
+  state=SUCCEEDED (0.699s)
+
+> ALTER TABLE labs.xabac_lab.customers_big_uniform_abac ALTER COLUMN country SET TAGS ('xabac_country')
+  state=SUCCEEDED (0.612s)
+
+> CREATE POLICY xabac_mask_pii ON SCHEMA labs.xabac_lab COMMENT 'Mask every column tagged xabac_pii' COLUMN MASK labs.xaba
+  state=FAILED (0.906s)
+  error: ServiceErrorCode.BAD_REQUEST: [RequestId=acad4c60-1a08-47fe-83a3-07a3152bf053 ErrorClass=PRINCIPAL_DOES_NOT_EXIST.PRINCIPAL_DOES_NOT_EXIST] Could not find principal with name admins.
+
+> CREATE POLICY xabac_only_it ON SCHEMA labs.xabac_lab COMMENT 'Keep only IT rows' ROW FILTER labs.xabac_lab.is_it TO `5fe
+  state=FAILED (0.491s)
+  error: ServiceErrorCode.BAD_REQUEST: [RequestId=95eb7418-bb74-44ea-a286-8e6783db7745 ErrorClass=PRINCIPAL_DOES_NOT_EXIST.PRINCIPAL_DOES_NOT_EXIST] Could not find principal with name admins.
+
+> SHOW POLICIES ON SCHEMA labs.xabac_lab
+  state=SUCCEEDED (0.448s)
+
+# done, 2 failed

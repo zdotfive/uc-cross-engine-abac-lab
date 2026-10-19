@@ -1,0 +1,23 @@
+# 08_billing.sql as admin, 3 statements
+
+> SELECT max(usage_date) AS last_usage_date FROM system.billing.usage
+  state=SUCCEEDED (10.950s)
+  last_usage_date
+  2026-10-19
+
+> SELECT usage_date, sku_name, identity_metadata.run_as AS run_as, SUM(usage_quantity) AS dbu FROM system.billing.usage WH
+  state=SUCCEEDED (3.334s)
+  usage_date | sku_name | run_as | dbu
+  2026-10-19 | PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND | 5fe8193a-4675-429d-834f-e6dc0756269c | 1.622916359999999910
+  2026-10-19 | PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND | b59157c5-acb4-4105-aa7b-68a217c4bdf9 | 0.373616186666666590
+
+> SELECT usage_date, billing_origin_product, round(SUM(usage_quantity), 6) AS dbu FROM system.billing.usage WHERE usage_da
+  state=SUCCEEDED (3.158s)
+  usage_date | billing_origin_product | dbu
+  2026-10-19 | DEFAULT_STORAGE | 0.049342
+  2026-10-19 | EXTERNAL_COMPATIBILITY | 1.996533
+  2026-10-19 | LAKEBASE | 0.008689
+  2026-10-19 | PREDICTIVE_OPTIMIZATION | 0.195656
+  2026-10-19 | SQL | 3.492867
+
+# done, 0 failed
