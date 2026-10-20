@@ -1,0 +1,52 @@
+# 10_control_setup.sql as admin, 16 statements
+
+> CREATE SCHEMA IF NOT EXISTS workspace.xabac_ctrl COMMENT 'Control: DuckDB on tables with and without rules'
+  state=SUCCEEDED (4.460s)
+
+> CREATE OR REPLACE FUNCTION workspace.xabac_ctrl.mask_pii(v STRING) RETURNS STRING RETURN CASE WHEN is_member('admins') T
+  state=SUCCEEDED (1.886s)
+
+> CREATE OR REPLACE FUNCTION workspace.xabac_ctrl.only_it(c STRING) RETURNS BOOLEAN RETURN is_member('admins') OR c = 'IT'
+  state=SUCCEEDED (0.987s)
+
+> CREATE TABLE workspace.xabac_ctrl.ctrl_delta_plain USING DELTA AS SELECT id + 1 AS customer_id, concat('Customer ', lpad
+  state=SUCCEEDED (13.797s)
+
+> CREATE TABLE workspace.xabac_ctrl.ctrl_delta_cm USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported')
+  state=SUCCEEDED (5.504s)
+
+> CREATE TABLE workspace.xabac_ctrl.ctrl_uniform USING DELTA TBLPROPERTIES ( 'delta.feature.catalogManaged' = 'supported',
+  state=SUCCEEDED (7.246s)
+
+> CREATE TABLE workspace.xabac_ctrl.ctrl_ice USING ICEBERG AS SELECT * FROM workspace.xabac_ctrl.ctrl_delta_plain
+  state=SUCCEEDED (4.588s)
+
+> CREATE TABLE workspace.xabac_ctrl.ctrl_ice_rules USING ICEBERG AS SELECT * FROM workspace.xabac_ctrl.ctrl_delta_plain
+  state=SUCCEEDED (4.426s)
+
+> ALTER TABLE workspace.xabac_ctrl.ctrl_ice_rules SET ROW FILTER workspace.xabac_ctrl.only_it ON (country)
+  state=SUCCEEDED (0.943s)
+
+> ALTER TABLE workspace.xabac_ctrl.ctrl_ice_rules ALTER COLUMN email SET MASK workspace.xabac_ctrl.mask_pii
+  state=SUCCEEDED (1.096s)
+
+> ALTER TABLE workspace.xabac_ctrl.ctrl_ice_rules ALTER COLUMN iban SET MASK workspace.xabac_ctrl.mask_pii
+  state=SUCCEEDED (1.021s)
+
+> GRANT USE CATALOG ON CATALOG workspace TO `6eff717c-f8f8-44e5-9e31-2e3b6a6e8518`
+  state=SUCCEEDED (0.928s)
+
+> GRANT USE SCHEMA ON SCHEMA workspace.xabac_ctrl TO `6eff717c-f8f8-44e5-9e31-2e3b6a6e8518`
+  state=SUCCEEDED (0.807s)
+
+> GRANT SELECT ON SCHEMA workspace.xabac_ctrl TO `6eff717c-f8f8-44e5-9e31-2e3b6a6e8518`
+  state=SUCCEEDED (0.617s)
+
+> GRANT EXECUTE ON SCHEMA workspace.xabac_ctrl TO `6eff717c-f8f8-44e5-9e31-2e3b6a6e8518`
+  state=SUCCEEDED (0.628s)
+
+> GRANT EXTERNAL USE SCHEMA ON SCHEMA workspace.xabac_ctrl TO `6eff717c-f8f8-44e5-9e31-2e3b6a6e8518`
+  state=FAILED (0.688s)
+  error: ServiceErrorCode.BAD_REQUEST: [RequestId=ac65987b-0c30-49d8-87fd-6f4bbb2d7f98 ErrorClass=INVALID_PARAMETER_VALUE.PRIVILEGE_NOT_APPLICABLE_TO_ENTITY] Privilege EXTERNAL USE SCHEMA is not applicable to this entity [workspace.xabac_ctrl:SCHEMA/SCHEMA_DB_STORAGE]. If this seems unexpected, please check the privilege version of the metastore in use [1.0].
+
+# done, 1 failed

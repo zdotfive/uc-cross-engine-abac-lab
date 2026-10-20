@@ -1,0 +1,12 @@
+# 10_control_cleanup.sql as admin, 2 statements
+
+> DROP SCHEMA IF EXISTS labs.xabac_ctrl CASCADE
+  state=SUCCEEDED (0.946s)
+
+> REVOKE USE CATALOG ON CATALOG labs FROM `7f4cf4e4-06fb-4715-8d13-dcc60a9f820e`
+  state=SUCCEEDED (0.486s)
+
+# done, 0 failed
+FREE: reader SP deleted
+xabac_ctrl present: False
+sp-xabac-reader present: False

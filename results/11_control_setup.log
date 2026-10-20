@@ -1,0 +1,51 @@
+# 10_control_setup.sql as admin, 16 statements
+
+> CREATE SCHEMA IF NOT EXISTS labs.xabac_ctrl COMMENT 'Control: DuckDB on tables with and without rules'
+  state=SUCCEEDED (2.757s)
+
+> CREATE OR REPLACE FUNCTION labs.xabac_ctrl.mask_pii(v STRING) RETURNS STRING RETURN CASE WHEN is_member('admins') THEN v
+  state=SUCCEEDED (1.332s)
+
+> CREATE OR REPLACE FUNCTION labs.xabac_ctrl.only_it(c STRING) RETURNS BOOLEAN RETURN is_member('admins') OR c = 'IT'
+  state=SUCCEEDED (1.017s)
+
+> CREATE TABLE labs.xabac_ctrl.ctrl_delta_plain USING DELTA AS SELECT id + 1 AS customer_id, concat('Customer ', lpad(CAST
+  state=SUCCEEDED (7.313s)
+
+> CREATE TABLE labs.xabac_ctrl.ctrl_delta_cm USING DELTA TBLPROPERTIES ('delta.feature.catalogManaged' = 'supported') AS S
+  state=SUCCEEDED (3.139s)
+
+> CREATE TABLE labs.xabac_ctrl.ctrl_uniform USING DELTA TBLPROPERTIES ( 'delta.feature.catalogManaged' = 'supported', 'del
+  state=SUCCEEDED (5.915s)
+
+> CREATE TABLE labs.xabac_ctrl.ctrl_ice USING ICEBERG AS SELECT * FROM labs.xabac_ctrl.ctrl_delta_plain
+  state=SUCCEEDED (3.827s)
+
+> CREATE TABLE labs.xabac_ctrl.ctrl_ice_rules USING ICEBERG AS SELECT * FROM labs.xabac_ctrl.ctrl_delta_plain
+  state=SUCCEEDED (2.936s)
+
+> ALTER TABLE labs.xabac_ctrl.ctrl_ice_rules SET ROW FILTER labs.xabac_ctrl.only_it ON (country)
+  state=SUCCEEDED (0.965s)
+
+> ALTER TABLE labs.xabac_ctrl.ctrl_ice_rules ALTER COLUMN email SET MASK labs.xabac_ctrl.mask_pii
+  state=SUCCEEDED (0.970s)
+
+> ALTER TABLE labs.xabac_ctrl.ctrl_ice_rules ALTER COLUMN iban SET MASK labs.xabac_ctrl.mask_pii
+  state=SUCCEEDED (0.910s)
+
+> GRANT USE CATALOG ON CATALOG labs TO `7f4cf4e4-06fb-4715-8d13-dcc60a9f820e`
+  state=SUCCEEDED (0.869s)
+
+> GRANT USE SCHEMA ON SCHEMA labs.xabac_ctrl TO `7f4cf4e4-06fb-4715-8d13-dcc60a9f820e`
+  state=SUCCEEDED (0.623s)
+
+> GRANT SELECT ON SCHEMA labs.xabac_ctrl TO `7f4cf4e4-06fb-4715-8d13-dcc60a9f820e`
+  state=SUCCEEDED (0.551s)
+
+> GRANT EXECUTE ON SCHEMA labs.xabac_ctrl TO `7f4cf4e4-06fb-4715-8d13-dcc60a9f820e`
+  state=SUCCEEDED (0.535s)
+
+> GRANT EXTERNAL USE SCHEMA ON SCHEMA labs.xabac_ctrl TO `7f4cf4e4-06fb-4715-8d13-dcc60a9f820e`
+  state=SUCCEEDED (0.510s)
+
+# done, 0 failed

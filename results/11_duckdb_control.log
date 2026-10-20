@@ -1,0 +1,37 @@
+catalog labs data region eu-west-1
+duckdb 1.5.6 [('delta', '6059958'), ('httpfs', '4bc690d'), ('iceberg', '890b78a9c')]
+
+=== 0) Iceberg REST loadTable
+ctrl_delta_plain   delegation=None                HTTP 400 {"error": {"message": "Table 'labs.xabac_ctrl.ctrl_delta_plain' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 5b21109a-370b-4f02-82e5-9b28814d2541)", "type": "BadRequestException", "code": 400}}
+ctrl_delta_plain   delegation=vended-credentials  HTTP 400 {"error": {"message": "Table 'labs.xabac_ctrl.ctrl_delta_plain' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: c4b227eb-8475-4597-95e9-4666d311d6c1)", "type": "BadRequestException", "code": 400}}
+ctrl_delta_cm      delegation=None                HTTP 400 {"error": {"message": "Table 'labs.xabac_ctrl.ctrl_delta_cm' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 60b76251-8e85-4118-ac45-8b0886353674)", "type": "BadRequestException", "code": 400}}
+ctrl_delta_cm      delegation=vended-credentials  HTTP 400 {"error": {"message": "Table 'labs.xabac_ctrl.ctrl_delta_cm' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 9eff13a2-3b6c-461d-9e22-5ecb3991e136)", "type": "BadRequestException", "code": 400}}
+ctrl_uniform       delegation=None                HTTP 200 scan-planning-mode=<not set> storage-credentials=0 prefixes=[] credential-keys=[] config-keys=['client.region', 's3.access-key-id', 's3.secret-access-key', 's3.session-token', 's3.session-token-expires-at-ms']
+ctrl_uniform       delegation=vended-credentials  HTTP 200 scan-planning-mode=<not set> storage-credentials=0 prefixes=[] credential-keys=[] config-keys=['client.region', 's3.access-key-id', 's3.secret-access-key', 's3.session-token', 's3.session-token-expires-at-ms']
+ctrl_ice           delegation=None                HTTP 200 scan-planning-mode=<not set> storage-credentials=0 prefixes=[] credential-keys=[] config-keys=['client.region', 's3.access-key-id', 's3.secret-access-key', 's3.session-token', 's3.session-token-expires-at-ms']
+ctrl_ice           delegation=vended-credentials  HTTP 200 scan-planning-mode=<not set> storage-credentials=0 prefixes=[] credential-keys=[] config-keys=['client.region', 's3.access-key-id', 's3.secret-access-key', 's3.session-token', 's3.session-token-expires-at-ms']
+ctrl_ice_rules     delegation=None                HTTP 200 scan-planning-mode=server storage-credentials=0 prefixes=[] credential-keys=[] config-keys=['scan-planning-mode']
+ctrl_ice_rules     delegation=vended-credentials  HTTP 200 scan-planning-mode=server storage-credentials=0 prefixes=[] credential-keys=[] config-keys=['scan-planning-mode']
+
+=== A) Iceberg REST ATTACH
+ctrl_delta_plain count by country  error (0.125s): HTTPException: HTTP Error: GetTableInformation endpoint returned response code BadRequest_400 with message "Table 'labs.xabac_ctrl.ctrl_delta_plain' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 0188ba0e-5edb-4624-b22b-49a57b0e08aa)"
+ctrl_delta_plain email,iban        error (0.111s): HTTPException: HTTP Error: GetTableInformation endpoint returned response code BadRequest_400 with message "Table 'labs.xabac_ctrl.ctrl_delta_plain' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 318052f6-4a08-4716-ab3e-299c3c2f366b)"
+ctrl_delta_cm count by country     error (0.121s): HTTPException: HTTP Error: GetTableInformation endpoint returned response code BadRequest_400 with message "Table 'labs.xabac_ctrl.ctrl_delta_cm' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 33191d21-90e6-48a9-a2ed-36d7f9bad8ce)"
+ctrl_delta_cm email,iban           error (0.106s): HTTPException: HTTP Error: GetTableInformation endpoint returned response code BadRequest_400 with message "Table 'labs.xabac_ctrl.ctrl_delta_cm' is not an Iceberg compatible table. [ErrorCode: 1000] (request_id: 7ec631c0-115b-4b2f-aa2d-12dcf034129d)"
+ctrl_uniform count by country      DATA RETURNED (1.043s): [('DE', 250), ('ES', 250), ('FR', 250), ('IT', 250)]
+ctrl_uniform email,iban            DATA RETURNED (0.351s): [('customer1@example.com', 'IT00X00000000000000000000'), ('customer2@example.com', 'DE00X00000000000000007919')]
+ctrl_ice count by country          DATA RETURNED (1.004s): [('DE', 250), ('ES', 250), ('FR', 250), ('IT', 250)]
+ctrl_ice email,iban                DATA RETURNED (0.302s): [('customer1@example.com', 'IT00X00000000000000000000'), ('customer2@example.com', 'DE00X00000000000000007919')]
+ctrl_ice_rules count by country    error (0.672s): HTTPException: HTTP Error: HTTP GET error reading 'https://<workspace-storage-bucket>.s3.eu-west-1.amazonaws.com/__unitystorage/catalogs/018c1245-36f5-401b-9183-250e5a3a3ef1/tables/9775514e-efad-4786-b607-023de1cc34f8/_iceberg/metadata/snap-8351340488158134562-1-2b0fe923-28ac-4f2e-bf8c-2fed3c213768.avro' in region 
+ctrl_ice_rules email,iban          error (0.528s): HTTPException: HTTP Error: HTTP GET error reading 'https://<workspace-storage-bucket>.s3.eu-west-1.amazonaws.com/__unitystorage/catalogs/018c1245-36f5-401b-9183-250e5a3a3ef1/tables/9775514e-efad-4786-b607-023de1cc34f8/_iceberg/metadata/snap-8351340488158134562-1-2b0fe923-28ac-4f2e-bf8c-2fed3c213768.avro' in region 
+
+=== B) credential vending
+ctrl_delta_plain                   temporary-table-credentials READ -> HTTP 200 (credentials issued)
+ctrl_delta_plain delta_scan        DATA RETURNED (1.726s): [('DE', 250), ('ES', 250), ('FR', 250), ('IT', 250)]
+ctrl_delta_cm                      temporary-table-credentials READ -> HTTP 200 (credentials issued)
+ctrl_delta_cm delta_scan           error (0.538s): InvalidInputException: Invalid Input Error: Table at 's3://<workspace-storage-bucket>/__unitystorage/catalogs/018c1245-36f5-401b-9183-250e5a3a3ef1/tables/d116a998-c149-4922-b39c-f1323f8e164e/' is a catalog-managed Delta table: reading it directly from storage would skip commits that are only tracked by the catalog. Attach 
+ctrl_uniform                       temporary-table-credentials READ -> HTTP 200 (credentials issued)
+ctrl_uniform delta_scan            error (0.517s): InvalidInputException: Invalid Input Error: Table at 's3://<workspace-storage-bucket>/__unitystorage/catalogs/018c1245-36f5-401b-9183-250e5a3a3ef1/tables/3183f4c9-4c04-4ac3-803f-d1511f862193/' is a catalog-managed Delta table: reading it directly from storage would skip commits that are only tracked by the catalog. Attach 
+ctrl_ice                           temporary-table-credentials READ -> HTTP 200 (credentials issued)
+ctrl_ice iceberg_scan              error (0.242s): Error: Failed to read iceberg table. No version was provided and no version-hint could be found, globbing the filesystem to locate the latest version is disabled by default as this is considered unsafe and could result in reading uncommitted data. To enable this use 'SET unsafe_enable_version_guessing = tr
+ctrl_ice_rules                     temporary-table-credentials READ -> HTTP 400 {"error_code": "INVALID_PARAMETER_VALUE", "message": "Query on table labs.xabac_ctrl.ctrl_ice_rules with row filter or column mask not supported on assigned clusters.", "details": [{"@type": "type.googleapis.com/google.r

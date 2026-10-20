@@ -22,6 +22,23 @@ UniForm Iceberg), with classic rules (row filter + column masks) or ABAC (govern
 
 Classic rules and ABAC policies gave identical results on every engine.
 
+## Why DuckDB gets nothing: control test
+
+Same DuckDB 1.5.6 setup, a reader with the same grants (a new service principal: the lab one had
+been deleted), same catalog, on tables without rules next to one with rules (2026-10-20,
+`11_duckdb_control.log`):
+
+| Table | Rules | Iceberg REST `loadTable` | DuckDB `ATTACH` + `SELECT` | `temporary-table-credentials` READ |
+|---|---|---|---|---|
+| `ctrl_ice` (managed Iceberg) | no | no `scan-planning-mode`; S3 credentials in `config` (`s3.access-key-id`, ...) | **data, all 4 countries, clear text** | 200 |
+| `ctrl_uniform` (Delta + UniForm) | no | same | **data, all 4 countries, clear text** | 200 |
+| `ctrl_delta_plain`, `ctrl_delta_cm` | no | 400 not Iceberg-compatible | 400 | 200 |
+| `ctrl_ice_rules` (managed Iceberg) | yes | `scan-planning-mode: server`, no credentials | S3 403 | 400 `ROW_COLUMN_ACCESS_POLICIES_NOT_SUPPORTED_ON_ASSIGNED_CLUSTERS` |
+
+Without rules the catalog hands out storage credentials and DuckDB reads the table. With rules it
+switches to server-side planning and hands out none. DuckDB 1.5.6 does not implement server-side
+scan planning, so it gets no data. The rules are what make the difference.
+
 ## Times (seconds, wall clock to rows in the client)
 
 "First" = first query (`GROUP BY country`) on a table; "warm" = median of runs 2-3 of the four
@@ -60,13 +77,23 @@ as the lab, and an IAM identity of that account can read the table files directl
 
 | Item | Usage | Price |
 |---|---|---|
-| Cross-engine ABAC (`EXTERNAL_COMPATIBILITY`, SKU `PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND`), lab reader, 2026-10-19 | 1.62 DBU | list 0.39 USD/DBU, about 0.63 USD |
-| Same, all of 2026-10-19 (lab + an earlier check) | 2.00 DBU | about 0.78 USD |
+| Cross-engine ABAC (`EXTERNAL_COMPATIBILITY`, SKU `PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND`), lab reader, 2026-10-19 | 1.89 DBU | list 0.39 USD/DBU, about 0.74 USD |
+| Same, all of 2026-10-19 (lab + an earlier check) | 2.27 DBU | about 0.88 USD |
 | EMR Serverless, successful run (173 s) | 0.273 vCPU-h, 0.683 GB-h | |
 | EMR Serverless, two failed runs | 0.033 vCPU-h + 0.083 GB-h; 4.504 vCPU-h + 11.26 GB-h | |
 
-Billing rows for the day were read the same evening; the re-check the next day is in `lab.md`.
-On Free Edition the DBU price is the list price shown in `system.billing.list_prices`, not a charge.
+Read on 2026-10-20 for 2026-10-19 (the same query the evening before showed 1.62 / 2.00 DBU:
+rows keep arriving for hours). On Free Edition the DBU price is the list price shown in `system.billing.list_prices`, not a charge.
+
+## Prerequisite: storage you own
+
+`EXTERNAL USE SCHEMA` cannot be granted on a schema in Databricks-managed default storage:
+`PRIVILEGE_NOT_APPLICABLE_TO_ENTITY ... [<catalog>.<schema>:SCHEMA/SCHEMA_DB_STORAGE]`, seen on a second,
+new Free Edition workspace that only has the default `workspace` catalog. The lab worked because its
+catalog sits on an S3 bucket in the lab's own AWS account. Without that, no external access at all.
+
+On Free Edition, the compute of the lab workspace was blocked from the evening of the run until the next morning
+("Cannot create the resource, please try again later"), which matches the fair-usage limit.
 
 ## Gaps between the docs and what happened
 
@@ -81,5 +108,6 @@ On Free Edition the DBU price is the list price shown in `system.billing.list_pr
 5. `DROP POLICY IF EXISTS` is a syntax error.
 6. EMR Serverless docs give `/usr/share/aws/iceberg/lib/iceberg-spark3-runtime.jar`; on
    `emr-spark-8.1.0` that file does not exist (`NoSuchFileException`). Iceberg is on the default classpath.
-7. EMR Serverless without a VPC cannot reach the Databricks host: every query hung ~400 s and the
+7. Cross-engine ABAC needs a catalog on storage you own: on default storage `EXTERNAL USE SCHEMA` is not applicable.
+8. EMR Serverless without a VPC cannot reach the Databricks host: every query hung ~400 s and the
    job hit its timeout. A VPC with private subnets and a NAT gateway fixed it.

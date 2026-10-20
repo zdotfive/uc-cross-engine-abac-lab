@@ -6,7 +6,8 @@ from dotenv import dotenv_values
 ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 env = dotenv_values(os.path.join(ROOT, ".env"))
 HOST = env["DATABRICKS_HOST"].rstrip("/")
-IRC = f"{HOST}/api/2.1/unity-catalog/iceberg-rest/v1/catalogs/labs"
+CATALOG = os.environ.get("CATALOG", "labs")
+IRC = f"{HOST}/api/2.1/unity-catalog/iceberg-rest/v1/catalogs/{CATALOG}"
 SECRETY = ("secret", "token", "key", "signature", "credential")
 
 

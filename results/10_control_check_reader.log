@@ -1,0 +1,30 @@
+# 10_control_check.sql as reader, 7 statements
+Traceback (most recent call last):
+  File "/Users/garena/projects/learning/labs_articoli_social/xabac_test/uc-cross-engine-abac-lab/scripts/run_sql.py", line 38, in <module>
+    r = w.statement_execution.execute_statement(statement=s, warehouse_id=env["DATABRICKS_WAREHOUSE_ID"],
+                                                wait_timeout="50s")
+  File "/Users/garena/projects/learning/labs_articoli_social/xabac_test/uc-cross-engine-abac-lab/.venv/lib/python3.14/site-packages/databricks/sdk/service/sql.py", line 9769, in execute_statement
+    res = self._api.do("POST", "/api/2.0/sql/statements", body=body, headers=headers)
+  File "/Users/garena/projects/learning/labs_articoli_social/xabac_test/uc-cross-engine-abac-lab/.venv/lib/python3.14/site-packages/databricks/sdk/core.py", line 95, in do
+    return self._api_client.do(
+           ~~~~~~~~~~~~~~~~~~~^
+        method=method,
+        ^^^^^^^^^^^^^^
+    ...<8 lines>...
+        response_headers=response_headers,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/garena/projects/learning/labs_articoli_social/xabac_test/uc-cross-engine-abac-lab/.venv/lib/python3.14/site-packages/databricks/sdk/_base_client.py", line 220, in do
+    response = call(
+        method,
+    ...<7 lines>...
+        auth=auth,
+    )
+  File "/Users/garena/projects/learning/labs_articoli_social/xabac_test/uc-cross-engine-abac-lab/.venv/lib/python3.14/site-packages/databricks/sdk/retries.py", line 59, in wrapper
+    raise err
+  File "/Users/garena/projects/learning/labs_articoli_social/xabac_test/uc-cross-engine-abac-lab/.venv/lib/python3.14/site-packages/databricks/sdk/retries.py", line 38, in wrapper
+    return func(*args, **kwargs)
+  File "/Users/garena/projects/learning/labs_articoli_social/xabac_test/uc-cross-engine-abac-lab/.venv/lib/python3.14/site-packages/databricks/sdk/_base_client.py", line 326, in _perform
+    raise error from None
+databricks.sdk.errors.platform.PermissionDenied: This API is disabled for users without the databricks-sql-access or workspace-consume entitlements. Contact your administrator for more information. [ReqId: 6150cb7f-8915-4671-b152-c8b2992654b3]. Config: host=https://<control-workspace-host>, account_id=c71e9572-fda3-4995-ac60-295c5da8420b, workspace_id=7474658109695721, discovery_url=https://<control-workspace-host>/oidc/.well-known/oauth-authorization-server, token_audience=https://<control-workspace-host>/oidc/v1/token, client_id=6eff717c-f8f8-44e5-9e31-2e3b6a6e8518, client_secret=***, auth_type=oauth-m2m

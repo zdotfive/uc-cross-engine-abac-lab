@@ -163,6 +163,33 @@ Logs: `emr/01_create.log` ... `emr/06_network_delete.log`, driver logs `emr/driv
 
 No data returned on any of the 12 tables.
 
+### Control test (2026-10-20)
+
+To check that the rules, and not DuckDB or the setup, are what stop the reads: schema
+`labs.xabac_ctrl` with 1,000-row tables without rules (`ctrl_delta_plain`, `ctrl_delta_cm`,
+`ctrl_uniform`, `ctrl_ice`) and one with the classic rules (`ctrl_ice_rules`); a new reader service
+principal with the lab's grants (`sql/10_control_setup.sql`, `scripts/duckdb_control.py`, logs
+`11_control_*.log`, `11_duckdb_control.log`). Inside Databricks the reader sees all four countries
+in clear text on the tables without rules, and IT with `****` on `ctrl_ice_rules`.
+
+- `loadTable` on `ctrl_ice`, `ctrl_uniform`: HTTP 200, no `scan-planning-mode`, `config` keys
+  `client.region`, `s3.access-key-id`, `s3.secret-access-key`, `s3.session-token`,
+  `s3.session-token-expires-at-ms` (values not logged). On `ctrl_ice_rules`:
+  `config={'scan-planning-mode': 'server'}`, no credentials.
+- DuckDB `ATTACH`: `ctrl_ice` and `ctrl_uniform` return `[('DE', 250), ('ES', 250), ('FR', 250), ('IT', 250)]`
+  and clear-text email/iban; `ctrl_ice_rules`: S3 403. Delta tables: 400 not Iceberg-compatible.
+- `temporary-table-credentials` READ: 200 on the four tables without rules, 400
+  `ROW_COLUMN_ACCESS_POLICIES_NOT_SUPPORTED_ON_ASSIGNED_CLUSTERS` on `ctrl_ice_rules`.
+  With the vended credentials, DuckDB's own `delta_scan` refuses catalog-managed Delta tables
+  ("reading it directly from storage would skip commits") and reads `ctrl_delta_plain`
+  (all four countries); `iceberg_scan` on the table root needs a version hint. These are DuckDB
+  client-side checks, unrelated to the rules.
+
+The same attempt on a second, new Free Edition workspace (default storage only) could not be set
+up: `GRANT EXTERNAL USE SCHEMA` -> `PRIVILEGE_NOT_APPLICABLE_TO_ENTITY ... SCHEMA_DB_STORAGE`
+(logs `10_control_*.log`). Everything created there was deleted and external data access on its
+metastore was switched back off.
+
 ## 7. Bypass attempts
 
 `scripts/bypass_probe.py` (log `07_bypass.log`; the first attempt `07_bypass_first_attempt.log`
@@ -204,7 +231,15 @@ EXTERNAL_COMPATIBILITY total for the day: 1.996533 DBU
 
 List price (`sql/08b_list_price.sql`): 0.39 USD per DBU for that SKU.
 
-Re-check on the next day: pending.
+Re-check on 2026-10-20 (`08_billing_day1.log`), same query:
+
+```
+2026-10-19 | PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND | <earlier check> | 0.373616186666666590
+2026-10-19 | PREMIUM_JOBS_SERVERLESS_COMPUTE_EUROPE_IRELAND | <lab reader>    | 1.893633559999999890
+EXTERNAL_COMPATIBILITY total for 2026-10-19: 2.267250 DBU
+```
+
+The lab reader's 1.893634 DBU at 0.39 USD/DBU is 0.74 USD at list price.
 
 ## 9. Cleanup
 

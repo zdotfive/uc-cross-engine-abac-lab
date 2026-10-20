@@ -4,7 +4,8 @@ Usage: python scripts/run_sql.py <file.sql> [--as-reader] [--max-rows N]
 
 Admin runs use a Databricks CLI profile (PROFILE, default FREE). --as-reader uses the
 reader service principal from .env. ${READER_APP_ID} in the SQL is replaced with
-DATABRICKS_CLIENT_ID. Credentials are never printed.
+DATABRICKS_CLIENT_ID and ${CATALOG} with $CATALOG (default labs).
+Credentials are never printed.
 """
 import os, re, sys, time
 from dotenv import dotenv_values
@@ -24,7 +25,8 @@ if as_reader:
 else:
     w = WorkspaceClient(profile=os.environ.get("PROFILE", "FREE"))
 
-sql = open(path).read().replace("${READER_APP_ID}", env.get("DATABRICKS_CLIENT_ID", ""))
+sql = (open(path).read().replace("${READER_APP_ID}", env.get("DATABRICKS_CLIENT_ID", ""))
+       .replace("${CATALOG}", os.environ.get("CATALOG", "labs")))
 sql = "\n".join(l for l in sql.splitlines() if not l.strip().startswith("--"))
 stmts = [s.strip() for s in sql.split(";") if s.strip()]
 print(f"# {os.path.basename(path)} as {'reader' if as_reader else 'admin'}, {len(stmts)} statements")

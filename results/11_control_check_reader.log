@@ -1,0 +1,50 @@
+# 10_control_check.sql as reader, 7 statements
+
+> SELECT current_user() AS who, is_member('admins') AS in_admins
+  state=SUCCEEDED (1.920s)
+  who | in_admins
+  7f4cf4e4-06fb-4715-8d13-dcc60a9f820e | false
+
+> SELECT 'ctrl_delta_plain' t, country, count(*) n FROM labs.xabac_ctrl.ctrl_delta_plain GROUP BY 2 ORDER BY 2
+  state=SUCCEEDED (0.739s)
+  t | country | n
+  ctrl_delta_plain | DE | 250
+  ctrl_delta_plain | ES | 250
+  ctrl_delta_plain | FR | 250
+  ctrl_delta_plain | IT | 250
+
+> SELECT 'ctrl_uniform' t, country, count(*) n FROM labs.xabac_ctrl.ctrl_uniform GROUP BY 2 ORDER BY 2
+  state=SUCCEEDED (0.577s)
+  t | country | n
+  ctrl_uniform | DE | 250
+  ctrl_uniform | ES | 250
+  ctrl_uniform | FR | 250
+  ctrl_uniform | IT | 250
+
+> SELECT 'ctrl_ice_rules' t, country, count(*) n FROM labs.xabac_ctrl.ctrl_ice_rules GROUP BY 2 ORDER BY 2
+  state=SUCCEEDED (1.256s)
+  t | country | n
+  ctrl_ice_rules | IT | 250
+
+> SELECT 'ctrl_ice' t, email, iban FROM labs.xabac_ctrl.ctrl_ice ORDER BY customer_id LIMIT 2
+  state=SUCCEEDED (0.529s)
+  t | email | iban
+  ctrl_ice | customer1@example.com | IT00X00000000000000000000
+  ctrl_ice | customer2@example.com | DE00X00000000000000007919
+
+> SELECT 'ctrl_ice_rules' t, email, iban FROM labs.xabac_ctrl.ctrl_ice_rules ORDER BY customer_id LIMIT 2
+  state=SUCCEEDED (1.075s)
+  t | email | iban
+  ctrl_ice_rules | **** | ****
+  ctrl_ice_rules | **** | ****
+
+> SELECT table_name, data_source_format FROM labs.information_schema.tables WHERE table_schema = 'xabac_ctrl' ORDER BY 1
+  state=SUCCEEDED (1.169s)
+  table_name | data_source_format
+  ctrl_delta_cm | DELTA
+  ctrl_delta_plain | DELTA
+  ctrl_ice | ICEBERG
+  ctrl_ice_rules | ICEBERG
+  ctrl_uniform | DELTA
+
+# done, 0 failed

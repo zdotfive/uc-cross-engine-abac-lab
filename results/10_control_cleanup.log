@@ -1,0 +1,13 @@
+# 10_control_cleanup.sql as admin, 2 statements
+
+> DROP SCHEMA IF EXISTS workspace.xabac_ctrl CASCADE
+  state=SUCCEEDED (1.298s)
+
+> REVOKE USE CATALOG ON CATALOG workspace FROM `6eff717c-f8f8-44e5-9e31-2e3b6a6e8518`
+  state=SUCCEEDED (0.609s)
+
+# done, 0 failed
+FREE2: reader SP deleted
+external_access_enabled: False
+xabac_ctrl present: False
+sp-xabac-reader present: False

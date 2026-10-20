@@ -20,7 +20,11 @@ Results: [results/SUMMARY.md](results/SUMMARY.md). Full log of the run: [results
 - The external engine never gets the table files. The catalog answers `scan-planning-mode: server`
   with no storage credentials; the server-side plan points to a new Parquet file holding the
   filtered, masked rows, with credentials for that file only.
-- DuckDB got no data at all, and every credential or path shortcut was refused.
+- DuckDB got no data from tables with rules, and every credential or path shortcut was refused.
+  A control test shows why: on the same tables without rules, the catalog hands out storage
+  credentials and DuckDB reads them; with rules, it switches to server-side planning only.
+- External access needs a catalog on storage you own: on Databricks default storage
+  `EXTERNAL USE SCHEMA` cannot be granted.
 - Rules in Unity Catalog do not protect the bucket itself: an IAM identity with access to the
   workspace storage bucket can read the files directly.
 - The examples in the docs needed a few changes to work (OAuth scope, table format, auth of the Delta
